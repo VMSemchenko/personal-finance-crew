@@ -12,11 +12,11 @@ from __future__ import annotations
 import time
 from typing import Any
 
-from langchain_anthropic import ChatAnthropic
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import HumanMessage
 from langgraph_supervisor import create_supervisor
 
-from app.config import MODEL_FAST, TEMPERATURE, ANTHROPIC_API_KEY
+from app.config import MODEL_FAST, TEMPERATURE, GOOGLE_API_KEY
 from app.agents.data_analyst import create_data_analyst
 from app.agents.savings_advisor import create_savings_advisor
 from app.agents.escalation import create_escalation_agent
@@ -63,11 +63,11 @@ def create_crew():
     escalation = create_escalation_agent()
 
     # Create supervisor
-    supervisor_llm = ChatAnthropic(
+    supervisor_llm = ChatGoogleGenerativeAI(
         model=MODEL_FAST,
         temperature=TEMPERATURE,
-        api_key=ANTHROPIC_API_KEY,
-        max_tokens=1024,
+        google_api_key=GOOGLE_API_KEY,
+        max_output_tokens=1024,
     )
 
     workflow = create_supervisor(

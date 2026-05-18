@@ -3,7 +3,7 @@ Tool definitions for both multi-agent crew and single-agent baseline.
 
 Each tool wraps a database query and returns formatted results.
 Tools are defined as LangChain tools for LangGraph compatibility,
-but also exported as plain dicts for the baseline Anthropic SDK.
+and also converted to Gemini function declarations for the baseline.
 """
 from __future__ import annotations
 
@@ -251,25 +251,6 @@ ALL_TOOLS = [
     check_suspicious_transactions,
     get_credit_card_behavior,
 ]
-
-
-def get_anthropic_tool_schemas() -> list[dict]:
-    """Convert LangChain tools to Anthropic tool_use format for the baseline agent."""
-    schemas = []
-    for t in ALL_TOOLS:
-        schema = {
-            "name": t.name,
-            "description": t.description,
-            "input_schema": t.args_schema.model_json_schema() if t.args_schema else {"type": "object", "properties": {}},
-        }
-        # Clean up the schema — remove title, handle defaults
-        input_schema = schema["input_schema"]
-        input_schema.pop("title", None)
-        if "properties" in input_schema:
-            for prop in input_schema["properties"].values():
-                prop.pop("title", None)
-        schemas.append(schema)
-    return schemas
 
 
 def execute_tool_by_name(name: str, args: dict) -> str:

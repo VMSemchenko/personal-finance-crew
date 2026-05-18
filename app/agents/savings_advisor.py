@@ -9,11 +9,11 @@ Responsibilities:
 """
 from __future__ import annotations
 
-from langchain_anthropic import ChatAnthropic
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage
 from langgraph.prebuilt import create_react_agent
 
-from app.config import MODEL_SMART, TEMPERATURE, ANTHROPIC_API_KEY
+from app.config import MODEL_SMART, TEMPERATURE, GOOGLE_API_KEY
 from app.tools import SAVINGS_ADVISOR_TOOLS
 
 SYSTEM_PROMPT = """Ти — фінансовий радник у мобільному банківському застосунку.
@@ -37,11 +37,11 @@ SYSTEM_PROMPT = """Ти — фінансовий радник у мобільн�
 
 def create_savings_advisor():
     """Create the Savings Advisor agent."""
-    llm = ChatAnthropic(
+    llm = ChatGoogleGenerativeAI(
         model=MODEL_SMART,
         temperature=TEMPERATURE,
-        api_key=ANTHROPIC_API_KEY,
-        max_tokens=4096,
+        google_api_key=GOOGLE_API_KEY,
+        max_output_tokens=4096,
     )
 
     agent = create_react_agent(

@@ -9,11 +9,11 @@ Responsibilities:
 """
 from __future__ import annotations
 
-from langchain_anthropic import ChatAnthropic
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage
 from langgraph.prebuilt import create_react_agent
 
-from app.config import MODEL_FAST, TEMPERATURE, ANTHROPIC_API_KEY
+from app.config import MODEL_FAST, TEMPERATURE, GOOGLE_API_KEY
 from app.tools import ESCALATION_TOOLS
 
 SYSTEM_PROMPT = """Ти — агент ескалації у фінансовому помічнику мобільного банку.
@@ -40,11 +40,11 @@ SYSTEM_PROMPT = """Ти — агент ескалації у фінансово�
 
 def create_escalation_agent():
     """Create the Escalation agent."""
-    llm = ChatAnthropic(
+    llm = ChatGoogleGenerativeAI(
         model=MODEL_FAST,
         temperature=TEMPERATURE,
-        api_key=ANTHROPIC_API_KEY,
-        max_tokens=2048,
+        google_api_key=GOOGLE_API_KEY,
+        max_output_tokens=2048,
     )
 
     agent = create_react_agent(

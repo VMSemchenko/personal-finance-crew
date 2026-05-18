@@ -15,16 +15,17 @@ PROJECT_ROOT = Path(__file__).parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
 DB_PATH = DATA_DIR / "finance.db"
 
-# LLM Configuration
-ANTHROPIC_API_KEY = os.getenv("ANTHROPIC_API_KEY", "")
+# LLM Configuration — Google Gemini
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
 
 # Model selection — use cheaper models for routing/simple tasks
-MODEL_FAST = "claude-haiku-4-20250414"       # Routing, simple queries
-MODEL_SMART = "claude-sonnet-4-20250514"     # Complex reasoning, advice
+MODEL_FAST = "gemini-2.0-flash"          # Routing, simple queries (fast & cheap)
+MODEL_SMART = "gemini-2.5-flash"         # Complex reasoning, advice
 
-# LangSmith
-LANGSMITH_API_KEY = os.getenv("LANGSMITH_API_KEY", "")
-LANGCHAIN_PROJECT = os.getenv("LANGCHAIN_PROJECT", "personal-finance-crew")
+# Langfuse
+LANGFUSE_PUBLIC_KEY = os.getenv("LANGFUSE_PUBLIC_KEY", "")
+LANGFUSE_SECRET_KEY = os.getenv("LANGFUSE_SECRET_KEY", "")
+LANGFUSE_HOST = os.getenv("LANGFUSE_HOST", "https://cloud.langfuse.com")
 
 # Agent configuration
 MAX_AGENT_STEPS = 10

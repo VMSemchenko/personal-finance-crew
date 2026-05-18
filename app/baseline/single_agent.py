@@ -1,5 +1,5 @@
 """
-Single-Agent Baseline — plain Anthropic SDK with tool_use loop.
+Single-Agent Baseline — plain Google GenAI SDK with function calling loop.
 
 No framework, no LangGraph — just direct API calls with tool use.
 This is the baseline to compare against the multi-agent crew.
@@ -10,10 +10,11 @@ import json
 import time
 from typing import Any
 
-import anthropic
+from google import genai
+from google.genai import types
 
-from app.config import ANTHROPIC_API_KEY, MODEL_SMART, TEMPERATURE
-from app.tools import get_anthropic_tool_schemas, execute_tool_by_name
+from app.config import GOOGLE_API_KEY, MODEL_SMART, TEMPERATURE
+from app.tools import ALL_TOOLS, execute_tool_by_name
 
 SYSTEM_PROMPT = """Ти — фінансовий помічник у мобільному банківському застосунку.
 
@@ -38,6 +39,35 @@ SYSTEM_PROMPT = """Ти — фінансовий помічник у мобіл�
 """
 
 
+def _build_tool_declarations() -> list:
+    """Build Gemini function declarations from LangChain tools."""
+    declarations = []
+    for t in ALL_TOOLS:
+        schema = t.args_schema.model_json_schema() if t.args_schema else {"type": "object", "properties": {}}
+        # Clean up schema for Gemini compatibility
+        schema.pop("title", None)
+        schema.pop("description", None)
+        if "properties" in schema:
+            for prop in schema["properties"].values():
+                prop.pop("title", None)
+                # Gemini doesn't support anyOf for optional params — simplify
+                if "anyOf" in prop:
+                    for variant in prop["anyOf"]:
+                        if variant.get("type") != "null":
+                            prop["type"] = variant.get("type", "string")
+                            break
+                    del prop["anyOf"]
+                if "default" in prop:
+                    del prop["default"]
+
+        declarations.append(types.FunctionDeclaration(
+            name=t.name,
+            description=t.description or "",
+            parameters=schema if schema.get("properties") else None,
+        ))
+    return declarations
+
+
 def run_baseline(query: str, history: list[dict] | None = None) -> dict[str, Any]:
     """Run a query through the single-agent baseline.
 
@@ -46,77 +76,98 @@ def run_baseline(query: str, history: list[dict] | None = None) -> dict[str, Any
         history: Optional conversation history
 
     Returns:
-        Dict with 'response', 'latency_ms', 'tool_calls', 'messages'
+        Dict with 'response', 'latency_ms', 'tool_calls', 'usage'
     """
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-    tools = get_anthropic_tool_schemas()
+    client = genai.Client(api_key=GOOGLE_API_KEY)
+    tool_declarations = _build_tool_declarations()
+    tools = [types.Tool(function_declarations=tool_declarations)]
 
-    # Build messages
-    messages = []
+    # Build contents
+    contents = []
     if history:
         for msg in history:
-            messages.append({"role": msg["role"], "content": msg["content"]})
-    messages.append({"role": "user", "content": query})
+            role = "user" if msg["role"] == "user" else "model"
+            contents.append(types.Content(
+                role=role,
+                parts=[types.Part.from_text(text=msg["content"])],
+            ))
+    contents.append(types.Content(
+        role="user",
+        parts=[types.Part.from_text(text=query)],
+    ))
 
     tool_calls_log = []
-    all_messages = list(messages)
     start = time.time()
+    total_tokens = {"input": 0, "output": 0}
 
     # Tool use loop
     max_iterations = 10
     for _ in range(max_iterations):
-        response = client.messages.create(
+        response = client.models.generate_content(
             model=MODEL_SMART,
-            max_tokens=4096,
-            temperature=TEMPERATURE,
-            system=SYSTEM_PROMPT,
-            tools=tools,
-            messages=all_messages,
+            contents=contents,
+            config=types.GenerateContentConfig(
+                system_instruction=SYSTEM_PROMPT,
+                tools=tools,
+                temperature=TEMPERATURE,
+                max_output_tokens=4096,
+            ),
         )
 
-        # Check if we need to call tools
-        if response.stop_reason == "tool_use":
-            # Process tool calls
-            assistant_content = response.content
-            all_messages.append({"role": "assistant", "content": assistant_content})
+        # Track usage
+        if response.usage_metadata:
+            total_tokens["input"] += response.usage_metadata.prompt_token_count or 0
+            total_tokens["output"] += response.usage_metadata.candidates_token_count or 0
 
-            tool_results = []
-            for block in assistant_content:
-                if block.type == "tool_use":
-                    tool_name = block.name
-                    tool_input = block.input
-                    tool_id = block.id
+        candidate = response.candidates[0]
+        parts = candidate.content.parts
 
-                    tool_calls_log.append({
-                        "tool": tool_name,
-                        "input": tool_input,
-                    })
+        # Check for function calls
+        function_calls = [p for p in parts if p.function_call]
 
-                    result = execute_tool_by_name(tool_name, tool_input)
+        if function_calls:
+            # Add model response to contents
+            contents.append(candidate.content)
 
-                    tool_results.append({
-                        "type": "tool_result",
-                        "tool_use_id": tool_id,
-                        "content": result,
-                    })
+            # Execute each function call and build responses
+            function_responses = []
+            for part in function_calls:
+                fc = part.function_call
+                tool_name = fc.name
+                tool_args = dict(fc.args) if fc.args else {}
 
-            all_messages.append({"role": "user", "content": tool_results})
+                tool_calls_log.append({
+                    "tool": tool_name,
+                    "input": tool_args,
+                })
 
+                result = execute_tool_by_name(tool_name, tool_args)
+
+                function_responses.append(types.Part.from_function_response(
+                    name=tool_name,
+                    response={"result": result},
+                ))
+
+            # Add function results
+            contents.append(types.Content(
+                role="user",
+                parts=function_responses,
+            ))
         else:
-            # Final response — extract text
+            # Final text response
             latency_ms = (time.time() - start) * 1000
             response_text = ""
-            for block in response.content:
-                if hasattr(block, "text"):
-                    response_text += block.text
+            for part in parts:
+                if part.text:
+                    response_text += part.text
 
             return {
                 "response": response_text,
                 "latency_ms": round(latency_ms, 1),
                 "tool_calls": tool_calls_log,
                 "usage": {
-                    "input_tokens": response.usage.input_tokens,
-                    "output_tokens": response.usage.output_tokens,
+                    "input_tokens": total_tokens["input"],
+                    "output_tokens": total_tokens["output"],
                 },
             }
 
@@ -126,5 +177,5 @@ def run_baseline(query: str, history: list[dict] | None = None) -> dict[str, Any
         "response": "Вибач, не вдалося обробити запит за допустиму кількість кроків.",
         "latency_ms": round(latency_ms, 1),
         "tool_calls": tool_calls_log,
-        "usage": {},
+        "usage": total_tokens,
     }

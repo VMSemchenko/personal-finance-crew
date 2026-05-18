@@ -1,5 +1,5 @@
 """
-Custom evaluators for LangSmith Experiments.
+Custom evaluators for evaluation.
 
 Three evaluators:
 1. success_rate — LLM judge: does the response correctly address the query?
@@ -9,24 +9,32 @@ Three evaluators:
 from __future__ import annotations
 
 import json
-import anthropic
+from google import genai
+from google.genai import types
 
-from app.config import ANTHROPIC_API_KEY, MODEL_FAST
+from app.config import GOOGLE_API_KEY, MODEL_FAST
 
 
 def _llm_judge(prompt: str) -> dict:
     """Run an LLM judge evaluation."""
-    client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
-    response = client.messages.create(
+    client = genai.Client(api_key=GOOGLE_API_KEY)
+    response = client.models.generate_content(
         model=MODEL_FAST,
-        max_tokens=512,
-        temperature=0,
-        messages=[{"role": "user", "content": prompt}],
+        contents=prompt,
+        config=types.GenerateContentConfig(
+            temperature=0,
+            max_output_tokens=512,
+        ),
     )
-    text = response.content[0].text
+    text = response.text
     try:
+        # Try to extract JSON from response (may have markdown wrapping)
+        if "```json" in text:
+            text = text.split("```json")[1].split("```")[0].strip()
+        elif "```" in text:
+            text = text.split("```")[1].split("```")[0].strip()
         return json.loads(text)
-    except json.JSONDecodeError:
+    except (json.JSONDecodeError, IndexError):
         # Try to extract score from text
         score = 1.0 if any(w in text.lower() for w in ["pass", "correct", "yes", "true"]) else 0.0
         return {"score": score, "reasoning": text}
