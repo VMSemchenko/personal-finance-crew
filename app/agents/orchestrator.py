@@ -121,7 +121,15 @@ def run_crew(query: str, history: list[dict] | None = None) -> dict[str, Any]:
         })
         # The last AI message with real content is our response
         if hasattr(msg, "content") and msg.content and msg.__class__.__name__ == "AIMessage":
-            response_text = msg.content
+            content = msg.content
+            # Gemini may return content as list of dicts with 'text' key
+            if isinstance(content, list):
+                response_text = " ".join(
+                    item.get("text", "") if isinstance(item, dict) else str(item)
+                    for item in content
+                ).strip()
+            else:
+                response_text = str(content)
 
     return {
         "response": response_text,

@@ -9,6 +9,7 @@ Three evaluators:
 from __future__ import annotations
 
 import json
+import re
 from google import genai
 from google.genai import types
 
@@ -16,28 +17,37 @@ from app.config import GOOGLE_API_KEY, MODEL_FAST
 
 
 def _llm_judge(prompt: str) -> dict:
-    """Run an LLM judge evaluation."""
+    """Run an LLM judge evaluation with JSON output."""
     client = genai.Client(api_key=GOOGLE_API_KEY)
     response = client.models.generate_content(
         model=MODEL_FAST,
         contents=prompt,
         config=types.GenerateContentConfig(
             temperature=0,
-            max_output_tokens=512,
+            max_output_tokens=1024,
+            response_mime_type="application/json",
+            response_schema={
+                "type": "object",
+                "properties": {
+                    "score": {"type": "number"},
+                    "reasoning": {"type": "string"},
+                },
+                "required": ["score", "reasoning"],
+            },
         ),
     )
-    text = response.text
+    text = response.text.strip()
     try:
-        # Try to extract JSON from response (may have markdown wrapping)
-        if "```json" in text:
-            text = text.split("```json")[1].split("```")[0].strip()
-        elif "```" in text:
-            text = text.split("```")[1].split("```")[0].strip()
-        return json.loads(text)
-    except (json.JSONDecodeError, IndexError):
-        # Try to extract score from text
+        result = json.loads(text)
+        # Ensure score is a float
+        score = result.get("score", 0)
+        if isinstance(score, str):
+            score = float(score)
+        result["score"] = max(0.0, min(1.0, float(score)))
+        return result
+    except (json.JSONDecodeError, ValueError, TypeError):
         score = 1.0 if any(w in text.lower() for w in ["pass", "correct", "yes", "true"]) else 0.0
-        return {"score": score, "reasoning": text}
+        return {"score": score, "reasoning": text[:500]}
 
 
 def evaluate_success(query: str, response: str, expected_behavior: str) -> dict:
@@ -63,9 +73,7 @@ Evaluate on these criteria:
 
 Return a JSON object with:
 - "score": float 0.0 to 1.0 (1.0 = perfect, 0.0 = complete failure)
-- "reasoning": brief explanation of score
-
-Return ONLY valid JSON, no other text."""
+- "reasoning": brief explanation of score"""
 
     return _llm_judge(prompt)
 
@@ -92,9 +100,7 @@ Check:
 Return a JSON object with:
 - "score": float 0.0 to 1.0 (1.0 = all numbers appear grounded, 0.0 = obvious hallucinations)
 - "reasoning": brief explanation
-- "numbers_found": list of numerical claims in the response
-
-Return ONLY valid JSON, no other text."""
+- "numbers_found": list of numerical claims in the response"""
 
     return _llm_judge(prompt)
 
@@ -127,8 +133,6 @@ Evaluate:
 
 Return a JSON object with:
 - "score": float 0.0 to 1.0 (1.0 = perfect tool selection)
-- "reasoning": brief explanation
-
-Return ONLY valid JSON, no other text."""
+- "reasoning": brief explanation"""
 
     return _llm_judge(prompt)

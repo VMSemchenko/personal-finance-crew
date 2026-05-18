@@ -1,0 +1,58 @@
+{
+  "crew": {
+    "total_tests": 17,
+    "avg_success_rate": 0.4,
+    "avg_groundedness": 0.706,
+    "avg_tool_selection": 0.059,
+    "latency_p50_ms": 3869.3,
+    "latency_p95_ms": 30724.3,
+    "avg_latency_ms": 10001.4,
+    "errors": 0,
+    "by_category": {
+      "facts": {
+        "count": 6,
+        "avg_success": 0.2
+      },
+      "advice": {
+        "count": 4,
+        "avg_success": 0.3
+      },
+      "multi_step": {
+        "count": 3,
+        "avg_success": 0.467
+      },
+      "edge": {
+        "count": 4,
+        "avg_success": 0.75
+      }
+    }
+  },
+  "baseline": {
+    "total_tests": 17,
+    "avg_success_rate": 0.785,
+    "avg_groundedness": 0.294,
+    "avg_tool_selection": 0.753,
+    "latency_p50_ms": 9053.4,
+    "latency_p95_ms": 24479.2,
+    "avg_latency_ms": 10548.8,
+    "errors": 1,
+    "by_category": {
+      "facts": {
+        "count": 6,
+        "avg_success": 0.658
+      },
+      "advice": {
+        "count": 4,
+        "avg_success": 0.75
+      },
+      "multi_step": {
+        "count": 3,
+        "avg_success": 0.8
+      },
+      "edge": {
+        "count": 4,
+        "avg_success": 1.0
+      }
+    }
+  }
+}

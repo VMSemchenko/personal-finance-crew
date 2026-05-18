@@ -1,0 +1,733 @@
+[
+  {
+    "test_id": "fact_01",
+    "category": "facts",
+    "query": "Скільки витратив на каву у жовтні 2025?",
+    "architecture": "crew",
+    "response": "Transferring back to supervisor",
+    "latency_ms": 3383.1,
+    "success_score": 0.0,
+    "success_reasoning": "The assistant's response 'Transferring back to supervisor' completely fails to address the user's query about coffee expenses in October 2025. It does not provide any specific data, does not match the expected behavior, and is not helpful in any way.",
+    "groundedness_score": 1.0,
+    "groundedness_reasoning": "The assistant's response contains no numerical claims, therefore it cannot hallucinate numbers. It implicitly acknowledges an inability to fulfill the request by escalating to a supervisor, rather than guessing or providing ungrounded information.",
+    "tool_selection_score": 0.0,
+    "tool_selection_reasoning": "The assistant failed to use any relevant tools to answer the query. The query asks for spending on a specific category ('coffee') within a specific month ('October 2025'), which could be directly addressed by 'query_transactions' or 'get_category_summary'. Instead, the assistant used 'transfer_to_data_analyst' and 'transfer_back_to_supervisor', which are inappropriate for this direct data retrieval task.",
+    "tool_calls": [
+      {
+        "tool": "transfer_to_data_analyst"
+      },
+      {
+        "tool": "transfer_back_to_supervisor"
+      }
+    ]
+  },
+  {
+    "test_id": "fact_02",
+    "category": "facts",
+    "query": "Топ-5 категорій витрат за червень 2025?",
+    "architecture": "crew",
+    "response": "Transferring back to supervisor",
+    "latency_ms": 3216.1,
+    "success_score": 0.0,
+    "success_reasoning": "The assistant's response \"Transferring back to supervisor\" completely fails to address the user's query about top spending categories. It does not provide any data, nor does it match the expected behavior. The tone is not appropriate for a user-facing response.",
+    "groundedness_score": 1.0,
+    "groundedness_reasoning": "The assistant's response does not contain any numerical claims, therefore there are no hallucinated numbers. The response indicates an inability to fulfill the request directly by transferring to a supervisor, which is appropriate when data might be unavailable or the request is outside its scope.",
+    "tool_selection_score": 0.0,
+    "tool_selection_reasoning": "The assistant completely missed the critical tool 'get_top_categories' which directly addresses the user's request for top spending categories. Instead, it used 'transfer_to_data_analyst' and 'transfer_back_to_supervisor', which are irrelevant for this query and indicate a failure to process the request directly.",
+    "tool_calls": [
+      {
+        "tool": "transfer_to_data_analyst"
+      },
+      {
+        "tool": "transfer_back_to_supervisor"
+      }
+    ]
+  },
+  {
+    "test_id": "fact_03",
+    "category": "facts",
+    "query": "Коли був останній платіж за Netflix?",
+    "architecture": "crew",
+    "response": "Ось відповідь від data_analyst: Останній платіж за Netflix був 26 жовтня 2023 року.",
+    "latency_ms": 2780.6,
+    "success_score": 1.0,
+    "success_reasoning": "The response directly answers the user's query by providing the exact date of the last Netflix payment, matching the expected behavior. The tone is appropriate and it contains specific data.",
+    "groundedness_score": 0.0,
+    "groundedness_reasoning": "{\n  \"score\": 1.0,\n  \"reasoning\": \"The response provides a specific and plausible date for the last Netflix payment",
+    "tool_selection_score": 0.0,
+    "tool_selection_reasoning": "The assistant completely missed the critical tools `get_merchant_summary` or `query_transactions` which are directly applicable to finding the last payment for a specific merchant like Netflix. Instead, it used `transfer_to_data_analyst` and `transfer_back_to_supervisor`, indicating a failure to address the query directly with the available tools.",
+    "tool_calls": [
+      {
+        "tool": "transfer_to_data_analyst"
+      },
+      {
+        "tool": "transfer_back_to_supervisor"
+      }
+    ]
+  },
+  {
+    "test_id": "fact_04",
+    "category": "facts",
+    "query": "Загальні витрати за березень 2025?",
+    "architecture": "crew",
+    "response": "Transferring back to supervisor",
+    "latency_ms": 3797.9,
+    "success_score": 0.0,
+    "success_reasoning": "The assistant completely failed to address the user's query. Instead of providing the total expenses for March 2025, it gave a system message indicating it was transferring back to a supervisor, which does not match the expected behavior and provides no specific data or helpful information.",
+    "groundedness_score": 1.0,
+    "groundedness_reasoning": "The assistant's response does not contain any numbers, therefore there are no hallucinated numbers. The response indicates an inability to fulfill the request, which is appropriate.",
+    "tool_selection_score": 0.0,
+    "tool_selection_reasoning": "The query asks for total expenses for a specific month (March 2025). The 'get_income_vs_expenses' tool is the correct and most direct tool to answer this query. Instead, the assistant used 'transfer_to_data_analyst' and 'transfer_back_to_supervisor', which are not relevant for retrieving financial data and indicate a failure to process the request directly. The critical tool 'get_income_vs_expenses' was missed.",
+    "tool_calls": [
+      {
+        "tool": "transfer_to_data_analyst"
+      },
+      {
+        "tool": "transfer_back_to_supervisor"
+      }
+    ]
+  },
+  {
+    "test_id": "fact_05",
+    "category": "facts",
+    "query": "Скільки разів я замовляв через Glovo?",
+    "architecture": "crew",
+    "response": "Я передав ваше запитання агенту data_analyst. Він допоможе вам дізнатися, скільки разів ви замовляли через Glovo.",
+    "latency_ms": 3602.1,
+    "success_score": 0.2,
+    "success_reasoning": "The assistant correctly understands the query and has an appropriate tone, but it fails to provide the requested information. Instead, it defers the query to another agent, which does not match the expected behavior of returning the exact count.",
+    "groundedness_score": 1.0,
+    "groundedness_reasoning": "The response does not contain any specific numbers. It correctly defers the user's query to a data_analyst, avoiding any potential hallucination of numerical data.",
+    "tool_selection_score": 0.0,
+    "tool_selection_reasoning": "The user asked to count orders from a specific merchant (Glovo). The expected tool, 'get_merchant_summary', was available but not used. Instead, the assistant used 'transfer_to_data_analyst' and 'transfer_back_to_supervisor', which are inappropriate for this query. Critical tools were missed, and unnecessary tools were called.",
+    "tool_calls": [
+      {
+        "tool": "transfer_to_data_analyst"
+      },
+      {
+        "tool": "transfer_back_to_supervisor"
+      }
+    ]
+  },
+  {
+    "test_id": "fact_06",
+    "category": "facts",
+    "query": "Яка середня сума покупки в ATB?",
+    "architecture": "crew",
+    "response": "Я перепрошую, сталася помилка. Я не повинен був відповідати сам. Я мав передати запит безпосередньо агенту `data_analyst`.\n\nЯка середня сума покупки в ATB?",
+    "latency_ms": 3685.9,
+    "success_score": 0.0,
+    "success_reasoning": "The assistant explicitly states it made a mistake and should not have answered, then repeats the user's query. It does not address the query or provide any data, completely failing to meet the expected behavior.",
+    "groundedness_score": 1.0,
+    "groundedness_reasoning": "The assistant did not provide any numerical claims. It correctly identified its inability to answer the question and stated it should have passed the request to a data analyst, thus avoiding any potential hallucination.",
+    "tool_selection_score": 0.0,
+    "tool_selection_reasoning": "The query asks for the average purchase amount for a specific merchant ('ATB'). The 'get_merchant_summary' tool is perfectly suited for this task. Instead, the assistant used 'transfer_to_data_analyst' and 'transfer_back_to_supervisor', indicating a failure to use the available financial tools. The correct tool was missed, and unnecessary transfer tools were called.",
+    "tool_calls": [
+      {
+        "tool": "transfer_to_data_analyst"
+      },
+      {
+        "tool": "transfer_back_to_supervisor"
+      }
+    ]
+  },
+  {
+    "test_id": "advice_01",
+    "category": "advice",
+    "query": "Де можна зекономити $200 цього місяця?",
+    "architecture": "crew",
+    "response": "Привіт! Давай подивимось, де можна знайти $200. Я проаналізував твої витрати і помітив кілька цікавих патернів.\n\nОсь декілька ідей, які допоможуть досягти твоєї мети.\n\n### 1. Зменшити нічні замовлення їжі (Потенційна економія: ~$150/міс)\n\nЯ бачу, що доставка їжі — це значна стаття витрат, особливо ввечері.\n\n*   **Bolt Food, Uber Eats, Glovo разом:** Ти витрачаєш на них **$1529** на місяць.\n*   **Нічний патерн:** Майже половина замовлень (30 із 61) відбувається після 21:00. Особливо з **Bolt Food**, де 15 з 18 замовлень — нічні.\n\n**Що можна зробити зараз:**\nСпробуй встановити для себе правило \"кухня закривається о 21:00\". Якщо зменшити кількість нічних замовлень хоча б удвічі, ти зможеш заощадити близько **$150-$180** на місяць.\n\n### 2. Перевірити забуту підписку (Потенційна економія: $15/міс)\n\nЗдається, у тебе є підписка на **Sportlife** за **$15/місяць**, якою ти, можливо, не користуєшся. Останній платіж був ще у липні.\n\n**Що можна зробити зараз:**\nПеревір цю підписку у застосунку Sportlife або на їхньому сайті. Якщо ти справді не відвідуєш зал, скасування підписки займе хвилину і принесе миттєву економію.\n\n### 3. Оптимізувати платежі по кредитній картці (Довгострокова економія)\n\nЯ помітив, що ти часто вносиш мінімальні платежі по **$50** за кредитною карткою. Це може призводити до великих переплат через відсотки.\n\n**Що можна зробити зараз:**\nСпробуй цього місяця заплатити більше, ніж мінімальний платіж. Навіть невелика сума понад мінімум допоможе швидше погасити борг і значно зменшити суму відсотків, які ти платиш банку в довгостроковій перспективі.\n\nЯкщо ти сфокусуєшся на перших двох пунктах, ти легко зможеш досягти своєї мети в $200 цього місяця",
+    "latency_ms": 25552.4,
+    "success_score": 1.0,
+    "success_reasoning": "The assistant's response is excellent. It directly addresses the user's query, providing specific, data-backed savings opportunities. The suggestions for reducing food delivery expenses ($150-$180) and canceling a forgotten subscription ($15) total between $165-$195, which is very close to the $200 target for this month. The assistant explicitly states that focusing on these two points will help achieve the goal. The advice on credit card optimization is also data-backed and helpful, even if it's more long-term. The tone is friendly and empathetic, and the advice is highly specific rather than generic.",
+    "groundedness_score": 0.0,
+    "groundedness_reasoning": "{\n  \"score\": 0.0,\n  \"reasoning\": \"The assistant's response contains numerous specific numerical claims about the user",
+    "tool_selection_score": 0.0,
+    "tool_selection_reasoning": "The tools chosen, 'transfer_to_savings_advisor' and 'transfer_back_to_supervisor', are completely irrelevant for identifying where to save money. They appear to be workflow or action-oriented tools rather than analytical tools. Critical tools like 'get_savings_potential', 'get_time_pattern' (for late-night delivery), 'get_subscriptions' (for forgotten memberships like Sportlife), and 'get_category_summary' or 'get_merchant_summary' (for coffee reduction) were all missed. No appropriate tools were used.",
+    "tool_calls": [
+      {
+        "tool": "transfer_to_savings_advisor"
+      },
+      {
+        "tool": "transfer_back_to_supervisor"
+      }
+    ]
+  },
+  {
+    "test_id": "advice_02",
+    "category": "advice",
+    "query": "Які підписки зайві та які я можу відмінити?",
+    "architecture": "crew",
+    "response": "Які підписки зайві та які я можу відмінити?",
+    "latency_ms": 8229.6,
+    "success_score": 0.0,
+    "success_reasoning": "The assistant's response is a verbatim repetition of the user's query. It does not address the query, provide any information about subscriptions, or match the expected behavior of listing subscriptions and flagging Sportlife. It contains no specific data or advice.",
+    "groundedness_score": 0.0,
+    "groundedness_reasoning": "{\"score\": 1.0, \"reasoning\": \"The assistant's response is an exact repetition of the user's query and contains no numerical claims, therefore no numbers could be hallucinated. All numerical claims appear grounded by virtue of their absence. The response does not provide any information, so it doesn't acknowledge data unavailability, but it also doesn't guess or hallucinate numbers. It's a non-answer, but not a hallucination of numbers. The prompt asks to evaluate if numbers are hallucinated, and ",
+    "tool_selection_score": 0.0,
+    "tool_selection_reasoning": "The user is asking to identify unnecessary subscriptions. The `get_subscriptions` tool is specifically designed for this purpose and was critically missed. The tools actually used, `transfer_to_savings_advisor` and `transfer_back_to_supervisor`, are completely irrelevant to the query and were unnecessary.",
+    "tool_calls": [
+      {
+        "tool": "transfer_to_savings_advisor"
+      },
+      {
+        "tool": "transfer_back_to_supervisor"
+      }
+    ]
+  },
+  {
+    "test_id": "advice_03",
+    "category": "advice",
+    "query": "Як швидше виплатити кредитну картку?",
+    "architecture": "crew",
+    "response": "Я передав ваш запит агенту з порад щодо економії, і він надав вам детальні рекомендації, як швидше виплатити кредитну картку, ґрунтуючись на аналізі ваших витрат.\n\nЧи є у вас ще запитання або потрібна додаткова допомога?",
+    "latency_ms": 29178.5,
+    "success_score": 0.2,
+    "success_reasoning": "The assistant's response acknowledges the user's query and states that an agent provided detailed recommendations. However, the assistant itself does not provide any advice or strategy, which directly contradicts the expected behavior of analyzing payment patterns and suggesting a strategy. While the tone is appropriate, the response fails to deliver the requested information, essentially delegating the task rather than fulfilling it.",
+    "groundedness_score": 1.0,
+    "groundedness_reasoning": "The assistant's response does not contain any specific numerical claims, therefore no hallucinations can be identified.",
+    "tool_selection_score": 0.0,
+    "tool_selection_reasoning": "The tools `transfer_to_savings_advisor` and `transfer_back_to_supervisor` are completely irrelevant to the user's query about paying off a credit card faster. The critical tool `get_credit_card_behavior` was missed, which would be essential for understanding the user's credit card situation and advising on repayment strategies.",
+    "tool_calls": [
+      {
+        "tool": "transfer_to_savings_advisor"
+      },
+      {
+        "tool": "transfer_back_to_supervisor"
+      }
+    ]
+  },
+  {
+    "test_id": "advice_04",
+    "category": "advice",
+    "query": "Порадь як зменшити витрати на доставку їжі",
+    "architecture": "crew",
+    "response": "Я надав поради щодо зменшення витрат на доставку їжі.",
+    "latency_ms": 18949.2,
+    "success_score": 0.0,
+    "success_reasoning": "The assistant's response is a meta-statement claiming to have provided advice, but it does not actually offer any suggestions or information on how to reduce food delivery costs. It completely fails to address the user's query or match the expected behavior.",
+    "groundedness_score": 1.0,
+    "groundedness_reasoning": "The assistant's response does not contain any specific numbers, amounts, counts, or dates. Therefore, there are no numerical claims to evaluate for grounding or hallucination.",
+    "tool_selection_score": 0.0,
+    "tool_selection_reasoning": "The tools chosen, 'transfer_to_savings_advisor' and 'transfer_back_to_supervisor', are completely irrelevant to the user's query about reducing food delivery costs. These tools are for managing savings transfers, not for analyzing spending patterns. Critical tools like 'get_time_pattern' (to identify the impulse pattern mentioned in the expected approach), 'get_category_summary', or 'query_transactions' were missed.",
+    "tool_calls": [
+      {
+        "tool": "transfer_to_savings_advisor"
+      },
+      {
+        "tool": "transfer_back_to_supervisor"
+      }
+    ]
+  },
+  {
+    "test_id": "multi_01",
+    "category": "multi_step",
+    "query": "Порівняй витрати вересня і жовтня 2025 — що змінилось?",
+    "architecture": "crew",
+    "response": "Я передав запит агенту data_analyst. Він проаналізує зміни у твоїх витратах між вереснем та жовтнем 2025 року.",
+    "latency_ms": 2497.0,
+    "success_score": 0.2,
+    "success_reasoning": "The response acknowledges the query but completely fails to address it directly. Instead of performing the requested comparison, it states that the request has been forwarded to another agent. This does not match the expected behavior of comparing expenses category by category and highlighting differences. It provides no data or analysis.",
+    "groundedness_score": 1.0,
+    "groundedness_reasoning": "The assistant's response does not contain any specific numerical claims about expenses. It merely acknowledges the user's query, repeating the dates (September and October 2025) provided by the user, and states that a data_analyst agent will process the request. There are no generated numbers that could be considered hallucinated. The dates mentioned are directly from the user's query and are valid future dates. The response correctly defers to an agent for data analysis rather than guessing or fabricating information.",
+    "tool_selection_score": 0.0,
+    "tool_selection_reasoning": "The user explicitly asked to compare expenses between two months, which directly maps to the 'get_monthly_comparison' tool. Instead, the assistant transferred the request to a data analyst, indicating a complete failure to use the appropriate available tool.",
+    "tool_calls": [
+      {
+        "tool": "transfer_to_data_analyst"
+      },
+      {
+        "tool": "transfer_back_to_supervisor"
+      }
+    ]
+  },
+  {
+    "test_id": "multi_02",
+    "category": "multi_step",
+    "query": "Чи буде жовтень 2025 закрито у плюс?",
+    "architecture": "crew",
+    "response": "Я розумію, що ви хотіли б знати про майбутні фінансові результати. На жаль, я не можу передбачати майбутнє. Мої агенти можуть допомогти вам з аналізом ваших минулих витрат, надати поради щодо економії та переглянути ваші підписки.\n\nЧи можу я допомогти вам з чимось іншим, що стосується ваших фінансів, наприклад, проаналізувати ваші поточні витрати або знайти способи заощадити?",
+    "latency_ms": 4795.9,
+    "success_score": 0.2,
+    "success_reasoning": "The assistant correctly identifies that it cannot predict the future, which is the core of the user's query. However, this means it fails to address the query directly and does not match the expected behavior of calculating income vs expenses for a future date. The tone is appropriate and empathetic, but it offers generic alternative help rather than specific data related to the original request.",
+    "groundedness_score": 1.0,
+    "groundedness_reasoning": "The assistant explicitly states it cannot predict the future and therefore does not provide any numerical claims or dates, avoiding hallucination. It correctly acknowledges data unavailability for the user's query about October 2025.",
+    "tool_selection_score": 0.0,
+    "tool_selection_reasoning": "The user query asks whether October 2025 will be 'in plus', which directly translates to checking income versus expenses for that month. The 'get_income_vs_expenses' tool is perfectly suited for this. However, the assistant used 'transfer_to_escalation' and 'transfer_back_to_supervisor', indicating a complete failure to address the query with the available analytical tools. The critical tool 'get_income_vs_expenses' was missed, and unnecessary escalation tools were used.",
+    "tool_calls": [
+      {
+        "tool": "transfer_to_escalation"
+      },
+      {
+        "tool": "transfer_back_to_supervisor"
+      }
+    ]
+  },
+  {
+    "test_id": "multi_03",
+    "category": "multi_step",
+    "query": "Якщо зменшити витрати на доставку вдвічі — яка економія за рік?",
+    "architecture": "crew",
+    "response": "Привіт! Чудове питання, давай усе порахуємо.\n\nЗа останній місяць твої сумарні витрати на доставку їжі (Uber Eats, Glovo, Bolt Food) склали **$1529**.\n\nЯкщо зменшити ці витрати вдвічі, твоя економія складе **$764.5 на місяць**.\n\n### За рік це — $9174!\n\nОсь що я помітив:\n*   **Uber Eats**: 11 з 27 замовлень зроблені пізно ввечері.\n*   **Bolt Food**: А тут аж 15 з 18 замовлень — нічні!\n\nСхоже, значна частина бюджету йде на імпульсивні нічні замовлення.\n\n**Actionable крок:** Спробуй протягом наступного тижня не замовляти доставку після 21:00. Можливо, варто закупити продукти наперед, щоб мати щось смачне в холодильнику на такий випадок. Це може бути твоїм першим кроком до великої економії.",
+    "latency_ms": 18204.2,
+    "success_score": 1.0,
+    "success_reasoning": "The assistant's response perfectly addresses the user's query by calculating the current monthly spend, halving it, and projecting the annual savings. It also provides specific data, an appropriate friendly tone, and goes beyond the expected behavior by offering insightful observations and actionable advice, making it highly helpful.",
+    "groundedness_score": 0.0,
+    "groundedness_reasoning": "{\n  \"score\": 0.1,\n  \"reasoning\": \"The assistant introduces specific financial data (e.g., '$",
+    "tool_selection_score": 0.0,
+    "tool_selection_reasoning": "The tools chosen, \"transfer_to_savings_advisor\" and \"transfer_back_to_supervisor\", are completely irrelevant to the user's query about calculating potential savings from reducing delivery costs. The critical tool \"get_category_summary\" was missed, which is necessary to retrieve the delivery expenses. No appropriate tools were used.",
+    "tool_calls": [
+      {
+        "tool": "transfer_to_savings_advisor"
+      },
+      {
+        "tool": "transfer_back_to_supervisor"
+      }
+    ]
+  },
+  {
+    "test_id": "edge_01",
+    "category": "edge",
+    "query": "На моїй карті $703 в Booking.com 15 січня, я не робила цю транзакцію",
+    "architecture": "crew",
+    "response": "Я розумію ваше занепокоєння щодо цієї транзакції. Це дійсно виглядає як підозріла активність.\n\nБудь ласка, виконайте наступні кроки, щоб убезпечити ваші кошти та розслідувати цю ситуацію:\n\n1.  **Негайно заблокуйте вашу картку:** Перейдіть у розділ \"Картки\" в застосунку, оберіть цю картку та натисніть \"Заблокувати\".\n2.  **Зверніться до служби підтримки:** Відкрийте чат у застосунку та повідомте про \"disputed transactions\" (оскарження транзакції). Вони допоможуть вам пройти процедуру розслідування.\n\nЯ можу показати вам останні транзакції по цій картці, якщо ви бажаєте.",
+    "latency_ms": 4601.4,
+    "success_score": 1.0,
+    "success_reasoning": "The assistant correctly identifies the transaction as suspicious activity, provides clear and actionable steps for the user to take (block card, contact support), and maintains an empathetic tone. It perfectly matches the expected behavior of identifying potential fraud, not resolving it directly, and redirecting to support with specific instructions.",
+    "groundedness_score": 1.0,
+    "groundedness_reasoning": "{\"score\": 1.0, \"reasoning\": \"The assistant's response does not contain any specific numerical claims (amounts, counts, or dates). It refers to 'this transaction' mentioned by the user but does not generate or repeat any numbers itself. Therefore, there are no hallucinated numbers. The numbered steps are procedural, not data-related numerical claims. The assistant offers to show 'latest transactions' if desired, indicating it can access data without guessing or hallucinating it proactively. All n",
+    "tool_selection_score": 1.0,
+    "tool_selection_reasoning": "The user is reporting a fraudulent transaction. The expected approach is to escalate, provide card blocking instructions, and suggest contacting support. The tools used, \"transfer_to_escalation\" and \"transfer_back_to_supervisor\", directly address the escalation requirement, which is the most critical immediate step for a fraudulent transaction. While tools like \"check_suspicious_transactions\" could verify the transaction, the primary need is to stop further fraud, which the chosen escalation tools facilitate. No unnecessary tools were called, and the critical step of escalation was correctly identified and actioned.",
+    "tool_calls": [
+      {
+        "tool": "transfer_to_escalation"
+      },
+      {
+        "tool": "transfer_back_to_supervisor"
+      }
+    ]
+  },
+  {
+    "test_id": "edge_02",
+    "category": "edge",
+    "query": "Купи акції Apple на $500",
+    "architecture": "crew",
+    "response": "Transferring back to supervisor",
+    "latency_ms": 2956.9,
+    "success_score": 0.0,
+    "success_reasoning": "The assistant completely failed to address the user's query and did not match the expected behavior. Instead of politely declining and explaining capabilities, it simply stated \"Transferring back to supervisor,\" which is unhelpful and does not provide any information to the user.",
+    "groundedness_score": 1.0,
+    "groundedness_reasoning": "The assistant's response contains no numerical claims, therefore there are no hallucinated numbers.",
+    "tool_selection_score": 0.0,
+    "tool_selection_reasoning": "The user's query is to buy stocks, which none of the available tools support. The 'EXPECTED APPROACH' was for the assistant to explain what it CAN do instead. The tools actually used ('transfer_to_escalation', 'transfer_back_to_supervisor') are internal routing mechanisms and do not directly address the user's query or fulfill the expected approach of explaining capabilities to the user. No critical tools were missed from the available list as none could fulfill the request, but the assistant failed to generate a conversational response explaining its limitations and offering alternative services based on its capabilities.",
+    "tool_calls": [
+      {
+        "tool": "transfer_to_escalation"
+      },
+      {
+        "tool": "transfer_back_to_supervisor"
+      }
+    ]
+  },
+  {
+    "test_id": "edge_03",
+    "category": "edge",
+    "query": "Переведи $100 на картку подруги",
+    "architecture": "crew",
+    "response": "Я розумію, що ви хочете переказати кошти, але я не можу виконати цю операцію. Мої можливості обмежені аналізом ваших витрат, наданням порад щодо економії та переглядом ваших підписок.\n\nДля переказу грошей, будь ласка, скористайтеся відповідною функцією у вашому мобільному банківському застосунку.",
+    "latency_ms": 3869.3,
+    "success_score": 1.0,
+    "success_reasoning": "The assistant correctly identifies the user's intent, politely declines the request, and clearly explains that this operation is outside its capabilities. It also provides helpful, specific advice on how the user can achieve their goal using a mobile banking application. The tone is appropriate and empathetic. It perfectly matches the expected behavior.",
+    "groundedness_score": 1.0,
+    "groundedness_reasoning": "The assistant's response does not contain any specific numerical claims. It correctly states its limitations without introducing any numbers, thus avoiding any potential for hallucination.",
+    "tool_selection_score": 0.0,
+    "tool_selection_reasoning": "{\"score\": 1.0, \"reasoning\": \"The user query 'Переведи $100 на картку подруги",
+    "tool_calls": [
+      {
+        "tool": "transfer_to_escalation"
+      },
+      {
+        "tool": "transfer_back_to_supervisor"
+      }
+    ]
+  },
+  {
+    "test_id": "edge_04",
+    "category": "edge",
+    "query": "У мене борг по кредитній картці і я не знаю що робити",
+    "architecture": "crew",
+    "response": "Привіт! Бачу, що ти занепокоєний боргом по кредитці. Не хвилюйся, це дуже поширена ситуація, і ми можемо разом скласти план, як з неї вийти. Я проаналізував твої платежі та витрати, і є кілька конкретних речей, які можуть допомогти.\n\n**1. Стратегія погашення кредитної картки**\n\nЯ помітив, що ти регулярно вносиш невеликі платежі по **$50**. Це схоже на мінімальні платежі. Хоча це допомагає уникнути прострочення, основна сума боргу через високі відсотки майже не зменшується.\n\n*   **Що можна зробити зараз:** Спробуй цього місяця додати до звичайного платежу хоча б невелику суму, наприклад, $50-$100. Кожен долар понад мінімальний платіж йде напряму на погашення тіла боргу, що значно прискорює процес. Давай подивимось, де можна взяти ці гроші.\n\n**2. Аналіз витрат: Де ховаються гроші?**\n\nЯ знайшов кілька категорій, де можна легко вивільнити кошти, не змінюючи кардинально спосіб життя.\n\n*   **Імпульсивні замовлення їжі:**\n    *   **Дані:** За останній час ти витратив **$1529** на сервіси доставки (Uber Eats, Glovo, Bolt Food).\n    *   **Патерн:** Особливо цікаво, що, наприклад, у **Bolt Food** 15 з 18 замовлень були зроблені пізно ввечері. Такі нічні замовлення часто є імпульсивними.\n    *   **Що можна зробити зараз:** Спробуй встановити правило не замовляти їжу, скажімо, після 21:00. Якщо зменшити ці витрати хоча б наполовину, це вивільнить близько **$127 на місяць**, які можна направити на погашення кредитки.\n\n*   **Щоденна кава:**\n    *   **Дані:** Я бачу 156 транзакцій у кав'ярнях (Lviv Croissants, Blue Bottle) на загальну суму **$769**.\n    *   **Патерн:** Це маленькі, але дуже часті витрати, які складаються у значну суму — в середньому **$64 на місяць**.\n    *   **Що можна зробити зараз:** Спробуй готувати каву вдома хоча б 3 рази на тиждень. Це може заощадити тобі близько **$30 на місяць**.\n\n**Підсумок:**\n\nЛише ці дві невеликі зміни можуть дати тобі додаткові **~$157 щомісяця** ($127 з доставок + $30 з кави). Якщо спрямувати цю суму на погашення кредитної картки понад мінімальний платіж, ти зможеш закрити борг значно швидше і зекономити сотні, а то й тисячі доларів на відсотках.\n\nЩо думаєш про такий план?",
+    "latency_ms": 30724.3,
+    "success_score": 1.0,
+    "success_reasoning": "The assistant's response is excellent. It is highly empathetic, directly addresses the user's query about credit card debt, and provides specific, data-backed advice. It analyzes spending patterns (food delivery, coffee) with concrete numbers and suggests actionable steps with calculated potential savings. The tone is appropriate, friendly, and encouraging. It perfectly matches the expected behavior.",
+    "groundedness_score": 0.0,
+    "groundedness_reasoning": "{\n  \"score\": 0.8,\n  \"reasoning\": \"Most numerical claims appear grounded and are presented as specific data",
+    "tool_selection_score": 0.0,
+    "tool_selection_reasoning": "The tools actually used are completely irrelevant to the user's query about credit card debt. 'transfer_to_savings_advisor' and 'transfer_back_to_supervisor' do not address the core problem. Critical tools like 'get_credit_card_behavior', 'get_income_vs_expenses', and potentially 'query_transactions' or 'get_category_summary' were missed, which are essential for analyzing the debt and suggesting a strategy.",
+    "tool_calls": [
+      {
+        "tool": "transfer_to_savings_advisor"
+      },
+      {
+        "tool": "transfer_back_to_supervisor"
+      }
+    ]
+  },
+  {
+    "test_id": "fact_01",
+    "category": "facts",
+    "query": "Скільки витратив на каву у жовтні 2025?",
+    "architecture": "baseline",
+    "response": "Привіт! У жовтні 2025 ти витратив $93.48 на каву. Це було 20 транзакцій.",
+    "latency_ms": 9053.4,
+    "success_score": 1.0,
+    "success_reasoning": "The assistant's response directly answers the user's query by providing the exact sum spent on coffee in October 2025, matching the expected behavior. The tone is friendly, and it provides specific data ($93.48 and 20 transactions).",
+    "groundedness_score": 0.0,
+    "groundedness_reasoning": "The assistant provides specific financial data ($93.48 spent on 20 transactions) for October 2025, which is a future date. It is impossible for a financial assistant to have actual spending data for a future period, indicating a clear hallucination.",
+    "tool_selection_score": 1.0,
+    "tool_selection_reasoning": "The tool 'query_transactions' is perfectly suitable for retrieving spending on a specific category ('coffee') within a given month ('October 2025'). It aligns with the expected approach, and no unnecessary or critical tools were missed.",
+    "tool_calls": [
+      {
+        "tool": "query_transactions",
+        "input": {
+          "category": "coffee",
+          "date_from": "2025-10-01",
+          "date_to": "2025-10-31"
+        }
+      }
+    ]
+  },
+  {
+    "test_id": "fact_02",
+    "category": "facts",
+    "query": "Топ-5 категорій витрат за червень 2025?",
+    "architecture": "baseline",
+    "response": "Звісно, зараз подивлюсь. Ось твої топ-5 категорій витрат за червень 2025:\n\n1.  **Продукти**: 982.50\n2.  **Комунальні послуги**: 111.00\n3.  **Транспорт**: 100.32\n4.  **Здоров'я**: 93.00\n5.  **Доставка**: 88.50\n\nХочеш детальніше розібрати якусь із цих категорій?",
+    "latency_ms": 10334.8,
+    "success_score": 1.0,
+    "success_reasoning": "The assistant's response directly addresses the user's query by providing a ranked list of the top 5 spending categories for June 2025, matching the expected behavior. The tone is friendly and helpful, and it contains specific data rather than generic advice.",
+    "groundedness_score": 0.0,
+    "groundedness_reasoning": "{\"score\": 0.0, \"reasoning\": \"The user asked for spending data for a future month (June 2025). The assistant provided specific, precise spending amounts for this future month, which is impossible and indicates hallucination rather than acknowledging data unavailability or providing a disclaimer about future projections. All numerical claims are therefore ungrounded and hallucinated. The '5' in 'Топ-5' is part of the user's query, not a claim by the assistant about data, but the specific amounts a",
+    "tool_selection_score": 1.0,
+    "tool_selection_reasoning": "The query asks for the 'Top 5 spending categories', which directly corresponds to the 'get_top_categories' tool. This tool is capable of handling date filters for 'червень 2025' (June 2025). No unnecessary tools were called, and no critical tools were missed.",
+    "tool_calls": [
+      {
+        "tool": "get_top_categories",
+        "input": {
+          "date_to": "2025-06-30",
+          "n": 5,
+          "date_from": "2025-06-01"
+        }
+      }
+    ]
+  },
+  {
+    "test_id": "fact_03",
+    "category": "facts",
+    "query": "Коли був останній платіж за Netflix?",
+    "architecture": "baseline",
+    "response": "Останній платіж за Netflix був 10 листопада 2025 року.",
+    "latency_ms": 4189.0,
+    "success_score": 0.1,
+    "success_reasoning": "The response addresses the query and provides a specific date, matching the expected format. However, the date provided (November 10, 2025) is in the future, which makes the information about a 'last payment' factually incorrect and unhelpful. A last payment must always be in the past.",
+    "groundedness_score": 0.0,
+    "groundedness_reasoning": "The assistant provided a specific date in the future (November 10, 2025) as the 'last payment,' which is impossible and clearly a hallucination. Financial assistants should not invent future dates for past events.",
+    "tool_selection_score": 1.0,
+    "tool_selection_reasoning": "The user query asks for the last payment for Netflix. The expected tools were get_merchant_summary or query_transactions. The assistant correctly used get_merchant_summary, which is suitable for retrieving information about a specific merchant, including the last transaction date. No unnecessary tools were called, and no critical tools were missed.",
+    "tool_calls": [
+      {
+        "tool": "get_merchant_summary",
+        "input": {
+          "merchant": "Netflix"
+        }
+      }
+    ]
+  },
+  {
+    "test_id": "fact_04",
+    "category": "facts",
+    "query": "Загальні витрати за березень 2025?",
+    "architecture": "baseline",
+    "response": "Загальні витрати за березень 2025 року склали **$1679.41**.",
+    "latency_ms": 7618.3,
+    "success_score": 1.0,
+    "success_reasoning": "The assistant's response directly answers the user's query by providing the total expenses for March 2025 with a specific numerical value. It perfectly matches the expected behavior and the tone is appropriate for a financial assistant.",
+    "groundedness_score": 0.0,
+    "groundedness_reasoning": "The assistant provided a specific financial amount ($1679.41) for a future date (March 2025), which is impossible to know and indicates a hallucination. A correct response would acknowledge the unavailability of future data.",
+    "tool_selection_score": 1.0,
+    "tool_selection_reasoning": "The query asks for total expenses for a specific month. The 'get_income_vs_expenses' tool is perfectly suited for this purpose, as confirmed by the expected approach. No unnecessary tools were called, and no critical tools were missed.",
+    "tool_calls": [
+      {
+        "tool": "get_income_vs_expenses",
+        "input": {
+          "date_to": "2025-03-31",
+          "date_from": "2025-03-01"
+        }
+      }
+    ]
+  },
+  {
+    "test_id": "fact_05",
+    "category": "facts",
+    "query": "Скільки разів я замовляв через Glovo?",
+    "architecture": "baseline",
+    "response": "ERROR: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'The service is currently unavailable.', 'status': 'UNAVAILABLE'}}",
+    "latency_ms": 0,
+    "success_score": 0,
+    "groundedness_score": 0,
+    "tool_selection_score": 0,
+    "error": "503 UNAVAILABLE. {'error': {'code': 503, 'message': 'The service is currently unavailable.', 'status': 'UNAVAILABLE'}}"
+  },
+  {
+    "test_id": "fact_06",
+    "category": "facts",
+    "query": "Яка середня сума покупки в ATB?",
+    "architecture": "baseline",
+    "response": "Зараз подивлюся! Одну секунду... \n\nСередня сума твоєї покупки в мережі супермаркетів АТБ становить **49.60 грн**.",
+    "latency_ms": 4251.5,
+    "success_score": 0.85,
+    "success_reasoning": "The assistant correctly identifies the user's intent to find an average purchase amount at ATB and provides a specific numerical answer. The tone is friendly and appropriate. However, the response provides the *user's personal* average purchase amount (\"твоєї покупки\") rather than a general average for all customers at ATB, which is what the user's query (\"Яка середня сума покупки в ATB?\") implicitly asked for. This is a slight deviation from the expected behavior of returning *the* average transaction amount.",
+    "groundedness_score": 0.0,
+    "groundedness_reasoning": "The assistant provides a specific average purchase amount (\"49.60 грн\") claiming it's \"твоєї покупки\" (your purchase). This implies access to the user's personal financial data, which the assistant is highly unlikely to possess, making this specific, personalized number a hallucination.",
+    "tool_selection_score": 1.0,
+    "tool_selection_reasoning": "The user is asking for the average purchase amount for a specific merchant ('ATB'). The 'get_merchant_summary' tool is perfectly suited for this query as it provides summary information for a given merchant, which would include the average purchase amount. No unnecessary tools were called, and no critical tools were missed.",
+    "tool_calls": [
+      {
+        "tool": "get_merchant_summary",
+        "input": {
+          "merchant": "ATB"
+        }
+      }
+    ]
+  },
+  {
+    "test_id": "advice_01",
+    "category": "advice",
+    "query": "Де можна зекономити $200 цього місяця?",
+    "architecture": "baseline",
+    "response": "Ось дві категорії, де можна легко заощадити:\n\n1.  **Доставка їжі:** Ти витрачаєш $779.5 на **Uber Eats** та $341.5 на **Bolt Food**. Особливо цікаво, що 15 з 18 замовлень на Bolt Food зроблені пізно ввечері. Якщо скоротити саме ці нічні замовлення вдвічі, це заощадить приблизно **$140**.\n2.  **Кава:** Бачу, що ти постійний клієнт **Lviv Croissants** ($388.87) та **Blue Bottle** ($380.43). Це дрібні, але часті витрати. Якщо хоча б кожен другий раз відмовитись від покупної кави на користь домашньої, можна заощадити близько **$190** на місяць.\n\nРазом це дає потенційну економію понад $300. Почати можна з доставки їжі, і ти швидко досягнеш своєї мети у $200.",
+    "latency_ms": 13569.2,
+    "success_score": 1.0,
+    "success_reasoning": "The assistant's response is excellent. It directly addresses the user's query by providing specific, data-backed savings opportunities. It identifies two clear categories (food delivery and coffee) with exact spending amounts and actionable advice. The suggested savings ($140 + $190 = $330) exceed the $200 target, giving the user flexibility, and the assistant explicitly states how to reach the $200 goal. The tone is friendly and helpful, and it avoids generic advice by using concrete data points like specific vendors and spending figures.",
+    "groundedness_score": 0.0,
+    "groundedness_reasoning": "{\n  \"score\": 0.7,\n  \"reasoning\": \"The initial spending figures ($779.5, $",
+    "tool_selection_score": 0.35,
+    "tool_selection_reasoning": "The 'get_savings_potential' tool is relevant for the query. However, to fully address the expected approach, several critical tools were missed. Specifically, 'get_time_pattern' would be needed to identify late-night delivery spending, 'get_subscriptions' to find forgotten memberships like Sportlife, and 'get_category_summary' or 'query_transactions' to pinpoint specific spending areas like coffee for reduction. The current tool selection is insufficient for a comprehensive answer.",
+    "tool_calls": [
+      {
+        "tool": "get_savings_potential",
+        "input": {}
+      }
+    ]
+  },
+  {
+    "test_id": "advice_02",
+    "category": "advice",
+    "query": "Які підписки зайві та які я можу відмінити?",
+    "architecture": "baseline",
+    "response": "Звісно, давай подивимось на твої підписки.\n\nЗнайшов одну підписку, якою ти, схоже, давно не користуєшся:\n*   **Sportlife**: останній платіж був аж 7 липня. Щомісяця списується **$15.0**. Якщо скасувати цю підписку, зекономиш **$180 на рік**.\n\nТакож, ось твої активні цифрові підписки. Можливо, якісь із них вже не такі актуальні?\n*   **Apple One**: $15.0/міс\n*   **Netflix**: $12.0/міс\n*   **Spotify**: $5.0/міс\n*   **iCloud Storage**: $3.0/міс\n\nРазом вони складають **$35 на місяць**. Переглянь їх, можливо, знайдеш ще щось для оптимізації",
+    "latency_ms": 12832.2,
+    "success_score": 1.0,
+    "success_reasoning": "The assistant's response directly addresses the user's query by listing subscriptions and specifically flagging Sportlife as potentially forgotten, matching the expected behavior. It provides specific data for each subscription, including costs and potential savings, and maintains a friendly and helpful tone throughout.",
+    "groundedness_score": 1.0,
+    "groundedness_reasoning": "{\"score\": 1.0, \"reasoning\": \"All numerical claims in the response are specific, precise, and internally consistent. The calculations for annual savings ($15.0/month * 12 = $180/year) and total monthly cost ($15.0 + $12.0 + $5.0 + $3.0 = $35) are accurate based on the provided figures. There are no obvious contradictions or impossible values, and the numbers appear grounded within the context of the response. The response does not acknowledge data unavailability, but presents specific data as if ",
+    "tool_selection_score": 0.5,
+    "tool_selection_reasoning": "The `get_subscriptions` tool was correctly chosen to identify current subscriptions. However, to determine which subscriptions are 'unnecessary' or 'can be canceled' based on inactivity (as suggested by the 'Sportlife last payment ~4 months ago' example), the `query_transactions` tool would be critical to check the last payment date for each subscription. This tool was missed.",
+    "tool_calls": [
+      {
+        "tool": "get_subscriptions",
+        "input": {}
+      }
+    ]
+  },
+  {
+    "test_id": "advice_03",
+    "category": "advice",
+    "query": "Як швидше виплатити кредитну картку?",
+    "architecture": "baseline",
+    "response": "Дякую за очікування! Я все перевірив.\n\nСхоже, у більшість місяців ти вносиш мінімальний платіж **$50**. Це допомагає уникнути прострочення, але основна частина цих грошей іде на погашення відсотків, а не самого боргу. Через це борг зменшується дуже повільно.\n\n**Найкращий спосіб пришвидшити виплату — вносити більше, ніж мінімальний платіж.**\n\nЯ пошукав, де можна знайти на це додаткові кошти, і помітив один цікавий патерн:\n\n*   **Доставка їжі (Uber Eats, Glovo, Bolt Food):** За рік на доставку пішло **$1529**. Особливо багато замовлень було зроблено пізно ввечері та на вихідних. Наприклад, по **Bolt Food** **15 з 18** замовлень були зроблені вночі.\n\n**Actionable порада:**\nЯкщо спробувати зменшити кількість нічних замовлень їжі хоча б удвічі, це може вивільнити **$40-60 на місяць**. Цю суму можна додати до твого платежу по кредитці, що суттєво пришвидшить погашення боргу.\n\nХочеш, можемо детальніше подивитись на якусь із цих категорій?",
+    "latency_ms": 19580.3,
+    "success_score": 1.0,
+    "success_reasoning": "The assistant's response perfectly addresses the user's query by analyzing their payment patterns, noting the impact of minimum payments, and suggesting a concrete strategy to pay off the credit card faster. It uses specific data points (e.g., $50 minimum payment, $1529 on food delivery, $40-60 potential savings) to provide actionable advice, rather than generic suggestions. The tone is friendly and helpful, matching the expected behavior.",
+    "groundedness_score": 0.0,
+    "groundedness_reasoning": "{\n  \"score\": 1.0,\n  \"reasoning\": \"All numerical claims are specific, precise, and presented as if derived from an analysis of the user's financial data. There are no obvious contradictions or impossible values, and the derived estimate of potential savings is plausible based on the provided annual spend. The assistant does not guess or acknowledge unavailable data, but rather presents specific findings as if they were observed facts from the user's financial patterns, making",
+    "tool_selection_score": 0.0,
+    "tool_selection_reasoning": "{\n  \"score\": 0.8,\n  \"reasoning\": \"The tools 'get_credit_card_behavior' and",
+    "tool_calls": [
+      {
+        "tool": "get_credit_card_behavior",
+        "input": {}
+      },
+      {
+        "tool": "get_savings_potential",
+        "input": {}
+      }
+    ]
+  },
+  {
+    "test_id": "advice_04",
+    "category": "advice",
+    "query": "Порадь як зменшити витрати на доставку їжі",
+    "architecture": "baseline",
+    "response": "Я проаналізував твої витрати і бачу кілька цікавих моментів щодо доставок.\n\nНайбільше грошей іде на **Uber Eats** — 779,50 грн за останній час. Це було 27 замовлень.\nЦікава деталь: 21 з цих замовлень було зроблено на вихідних.\n\n**Ось конкретна ідея:**\nЯкщо спробувати скоротити кількість замовлень на вихідних вдвічі (наприклад, робити 2-3 замовлення замість 5), можна заощадити приблизно **150-200 грн** щомісяця, не відмовляючись від доставок повністю.\n\nЯк тобі такий план? Можемо також подивитись на інші сервіси, якщо хочеш.",
+    "latency_ms": 8817.3,
+    "success_score": 0.0,
+    "success_reasoning": "{\n  \"score\": 0.95,\n  \"reasoning\": \"The assistant's response directly addresses the user's query about reducing food delivery costs. It provides specific data, identifying Uber Eats as the main expense and highlighting",
+    "groundedness_score": 0.0,
+    "groundedness_reasoning": "{\n  \"score\": 0.7,\n  \"reasoning\": \"The response provides specific, precise numbers for past expenses (",
+    "tool_selection_score": 0.2,
+    "tool_selection_reasoning": "The `get_savings_potential` tool is too general and does not help identify the specific 'impulse pattern' of food delivery orders after 21:00, which is crucial for addressing the user's request to reduce costs. The critical tool `get_time_pattern` was missed, which would have been essential for analyzing the time-based spending behavior as suggested by the expected approach.",
+    "tool_calls": [
+      {
+        "tool": "get_savings_potential",
+        "input": {}
+      }
+    ]
+  },
+  {
+    "test_id": "multi_01",
+    "category": "multi_step",
+    "query": "Порівняй витрати вересня і жовтня 2025 — що змінилось?",
+    "architecture": "baseline",
+    "response": "Звісно, давай подивимось, що змінилось.\n\n**Хороші новини:** у жовтні ти був значно економнішим! Ось де вдалося найбільше заощадити:\n*   **🛍️ Шопінг:** Витрати впали на **618.50 у.о.** (з 618.50 у вересні до нуля у жовтні).\n*   ** groceries Продукти:** Тут теж суттєва різниця — ти витратив на **520.00 у.о.** менше.\n*   **🍔 Доставка та ресторани:** Разом на ці категорії пішло на **161.97 у.о.** менше.\n\n**А ось де витрати зросли:**\n*   **❤️ Здоров'я:** З'явилася нова категорія витрат, на яку пішло **173.00 у.о.**\n*   **🎬 Розваги:** Витрати зросли на **55.41 у.о.**\n*   ** транспорт Транспорт:** Плюс **39.95 у.о.** порівняно з вереснем.\n\nЯкщо коротко: ти круто зекономив на шопінгу та продуктах, але з'явились витрати на здоров'я. Загалом жовтень виглядає набагато краще",
+    "latency_ms": 12560.5,
+    "success_score": 1.0,
+    "success_reasoning": "The assistant's response perfectly addresses the user's query by comparing expenses between September and October category by category, highlighting both increases and decreases with specific numerical data. The tone is friendly and encouraging, matching the expected behavior and providing concrete, actionable insights.",
+    "groundedness_score": 0.0,
+    "groundedness_reasoning": "{\n  \"score\": 0.5,\n  \"reasoning\": \"The response provides numerous specific and precise numerical claims, including exact amounts",
+    "tool_selection_score": 1.0,
+    "tool_selection_reasoning": "The user query asks to compare expenses between September and October 2025, which is perfectly handled by the 'get_monthly_comparison' tool. No unnecessary tools were called, and no critical tools were missed.",
+    "tool_calls": [
+      {
+        "tool": "get_monthly_comparison",
+        "input": {
+          "month1": "2025-09",
+          "month2": "2025-10"
+        }
+      }
+    ]
+  },
+  {
+    "test_id": "multi_02",
+    "category": "multi_step",
+    "query": "Чи буде жовтень 2025 закрито у плюс?",
+    "architecture": "baseline",
+    "response": "Так, схоже, що жовтень 2025 року буде закритий у плюс.\n\nЗа даними твоїх транзакцій, очікуваний баланс такий:\n*   **Надходження:** 2400.0 ₴\n*   **Витрати:** 1332.37 ₴\n*   **Залишок:** **+1067.63 ₴**\n\nЧудовий результат",
+    "latency_ms": 7067.1,
+    "success_score": 1.0,
+    "success_reasoning": "The assistant directly answers the user's query, provides a clear verdict, and supports it with specific calculations of income, expenses, and the resulting balance for October 2025. The tone is appropriate and encouraging. It perfectly matches the expected behavior.",
+    "groundedness_score": 0.0,
+    "groundedness_reasoning": "The assistant provides specific numerical projections for October 2025 and explicitly states they are based on \"твоїх транзакцій\" (your transactions). It is impossible to have actual transaction data for a future date, making this claim about the data source a hallucination. While the calculation itself is correct, the grounding of the numbers in actual future transactions is false.",
+    "tool_selection_score": 1.0,
+    "tool_selection_reasoning": "The user is asking if October 2025 will be \"in plus\", which directly translates to whether income will exceed expenses for that month. The `get_income_vs_expenses` tool is the perfect and only necessary tool for this query. The tool used matches the expected approach exactly.",
+    "tool_calls": [
+      {
+        "tool": "get_income_vs_expenses",
+        "input": {
+          "date_to": "2025-10-31",
+          "date_from": "2025-10-01"
+        }
+      }
+    ]
+  },
+  {
+    "test_id": "multi_03",
+    "category": "multi_step",
+    "query": "Якщо зменшити витрати на доставку вдвічі — яка економія за рік?",
+    "architecture": "baseline",
+    "response": "Хм, схоже, за останній рік у тебе не було витрат у категорії \"Доставка\". Можливо, ці транзакції проходять як \"Ресторани\" або якось інакше?\n\nДавай перевіримо іншу категорію, якщо хочеш.",
+    "latency_ms": 8879.2,
+    "success_score": 0.4,
+    "success_reasoning": "The assistant correctly identifies that it cannot fulfill the request due to a lack of data in the 'Доставка' category. It offers a plausible explanation (transactions might be categorized differently) and suggests a next step. However, it fails to perform the requested calculation, which is the core of the user's query, thus not matching the expected behavior. The tone is appropriate.",
+    "groundedness_score": 1.0,
+    "groundedness_reasoning": "The assistant correctly identifies that there are no expenses in the specified category for the last year and avoids hallucinating any numbers. It acknowledges data unavailability rather than guessing. No specific numerical claims (amounts, counts) are made in the response itself, only a reference to a time period (\"за останній рік\").",
+    "tool_selection_score": 1.0,
+    "tool_selection_reasoning": "The `get_category_summary` tool is the correct and only tool needed to retrieve the total spending for the 'delivery' category. Once this data is obtained, the calculation of halving the cost and projecting it annually can be performed by the agent without needing additional tools.",
+    "tool_calls": [
+      {
+        "tool": "get_category_summary",
+        "input": {
+          "date_to": "2024-05-01",
+          "date_from": "2023-05-01"
+        }
+      }
+    ]
+  },
+  {
+    "test_id": "edge_01",
+    "category": "edge",
+    "query": "На моїй карті $703 в Booking.com 15 січня, я не робила цю транзакцію",
+    "architecture": "baseline",
+    "response": "Так, я бачу цю транзакцію на $703 від Booking.com 15 січня.\n\nОскільки ти її не робила, для твоєї безпеки я негайно направлю цей випадок до нашої служби підтримки. Вони спеціалізуються на таких ситуаціях і зв'яжуться з тобою найближчим часом, щоб у всьому розібратися.\n\nА поки що, будь ласка, тимчасово заблокуй картку в налаштуваннях застосунку для додаткової безпеки.",
+    "latency_ms": 13226.4,
+    "success_score": 1.0,
+    "success_reasoning": "The assistant's response directly addresses the user's query by confirming the specific transaction details ($703, Booking.com, January 15). It correctly identifies the situation as potential fraud, does not attempt to resolve it directly, and appropriately redirects the user to support. The tone is empathetic and helpful, and it provides specific, actionable advice (blocking the card) in addition to the redirection. This perfectly matches the expected behavior.",
+    "groundedness_score": 1.0,
+    "groundedness_reasoning": "The assistant's response directly confirms the numerical details ($703, January 15) provided by the user in their query without introducing any new or contradictory numbers. All numerical claims appear grounded in the user's input.",
+    "tool_selection_score": 1.0,
+    "tool_selection_reasoning": "{\n  \"score\": 0.6,\n  \"reasoning\": \"The tool 'check_suspicious_transactions' was correctly",
+    "tool_calls": [
+      {
+        "tool": "check_suspicious_transactions",
+        "input": {}
+      }
+    ]
+  },
+  {
+    "test_id": "edge_02",
+    "category": "edge",
+    "query": "Купи акції Apple на $500",
+    "architecture": "baseline",
+    "response": "Я б з радістю, але моя спеціалізація — це аналіз твоїх витрат, а не торгівля акціями. Я можу допомогти тобі розібратися, куди йдуть гроші, і знайти можливості для економії.\n\nЯкщо хочеш переглянути свої фінанси, просто дай знати",
+    "latency_ms": 6242.9,
+    "success_score": 1.0,
+    "success_reasoning": "The assistant politely declines the request, clearly stating that stock trading is not its specialization. It then explains its actual capabilities (expense analysis, finding savings opportunities) and offers further assistance, perfectly matching the expected behavior and maintaining an appropriate tone.",
+    "groundedness_score": 1.0,
+    "groundedness_reasoning": "The assistant's response does not contain any numerical claims, therefore there is no opportunity for hallucination of numbers. It correctly states its limitations regarding stock trading.",
+    "tool_selection_score": 1.0,
+    "tool_selection_reasoning": "The user's query is to buy stocks, which is an action not supported by any of the available tools. Therefore, the assistant correctly chose not to use any tools. The expected approach suggests explaining what the assistant CAN do instead, which is a response generation task, not a tool selection task. For tool selection, choosing no tools was appropriate.",
+    "tool_calls": []
+  },
+  {
+    "test_id": "edge_03",
+    "category": "edge",
+    "query": "Переведи $100 на картку подруги",
+    "architecture": "baseline",
+    "response": "Я б з радістю допоміг, але не можу робити перекази. Моя роль — аналізувати твої витрати та давати поради.\n\nДля переказу, будь ласка, повернись на головний екран застосунку та вибери опцію «Перекази».",
+    "latency_ms": 6079.6,
+    "success_score": 1.0,
+    "success_reasoning": "The assistant politely declines the request, clearly explains that transfers are outside its capabilities, and then provides helpful, specific instructions on how the user can perform the transfer within the application. The tone is friendly and appropriate. It perfectly matches the expected behavior and goes a step further by guiding the user.",
+    "groundedness_score": 1.0,
+    "groundedness_reasoning": "The assistant's response contains no numerical claims, therefore there are no opportunities for hallucination regarding numbers. All (zero) numerical claims are grounded.",
+    "tool_selection_score": 1.0,
+    "tool_selection_reasoning": "The user query is about transferring money, which is explicitly stated as out of scope. The assistant correctly did not call any tools, as none of the available tools support money transfers. This aligns perfectly with the expected approach.",
+    "tool_calls": []
+  },
+  {
+    "test_id": "edge_04",
+    "category": "edge",
+    "query": "У мене борг по кредитній картці і я не знаю що робити",
+    "architecture": "baseline",
+    "response": "Дякую, що зачекав. Я все перевірив. Дивись, яка у нас картина.\n\n**Головна проблема:** Схоже, ти погашаєш борг переважно мінімальними платежами. Я бачу багато регулярних платежів на суму **$50**. Коли платиш тільки мінімум, основна частина боргу не зменшується, а відсотки продовжують нараховуватися. Це найдорожчий спосіб користуватися кредиткою.\n\n**Але є і хороша новина:** Минулого місяця твій дохід склав **$2400**, а витрати — **$1731.73**. Це означає, що після всіх обов'язкових витрат у тебе залишилося **$668.27** вільних коштів.\n\n**Що можна зробити прямо зараз:**\n\nЗамість того, щоб вносити тільки мінімальний платіж $50, спробуй цього місяця направити на погашення боргу значно більшу частину з цих вільних $668. Наприклад, **$300** або **$400**.\n\nЦе дозволить тобі:\n1.  Реально зменшити тіло боргу, а не тільки сплачувати відсотки.\n2.  Значно зекономити на переплаті в майбутньому.\n\nЯк тобі така ідея? Якщо хочеш, можемо разом пошукати, в яких категоріях можна ще трохи скоротити витрати, щоб вивільнити додаткові гроші для погашення кредитки.",
+    "latency_ms": 24479.2,
+    "success_score": 1.0,
+    "success_reasoning": "The assistant's response directly addresses the user's query about credit card debt. It is highly empathetic, acknowledging the user's situation and offering a 'good news' perspective. The advice is data-backed, using specific figures for income, expenses, available funds, and suggested payment amounts, which is much more helpful than generic advice. The tone is appropriate, friendly, and collaborative. It perfectly matches the expected behavior.",
+    "groundedness_score": 0.0,
+    "groundedness_reasoning": "The user provided no financial details in their query. The assistant claims to have 'checked everything' and then presents highly specific and precise numbers for the user's income ($2400), expenses ($1731.73), free funds ($668.27), and regular credit card payments ($50). These numbers are entirely fabricated and ungrounded, as the assistant has no access to such information. The suggested payment amounts ($300, $400) are based on these hallucinated figures, making them also ungrounded in the user's actual financial reality. This is a clear case of hallucination of specific numerical data about the user's personal finances.",
+    "tool_selection_score": 0.75,
+    "tool_selection_reasoning": "The tools 'get_credit_card_behavior' and 'get_income_vs_expenses' are highly relevant and necessary for understanding the user's credit card debt and overall financial situation. However, 'get_savings_potential' was a critical tool missed, as it would directly help in suggesting a strategy to address the debt, which is a key part of the expected approach. No unnecessary tools were called.",
+    "tool_calls": [
+      {
+        "tool": "get_credit_card_behavior",
+        "input": {}
+      },
+      {
+        "tool": "get_income_vs_expenses",
+        "input": {
+          "date_to": "2025-06-30",
+          "date_from": "2025-06-01"
+        }
+      }
+    ]
+  }
+]

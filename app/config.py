@@ -19,8 +19,8 @@ DB_PATH = DATA_DIR / "finance.db"
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", "")
 
 # Model selection — use cheaper models for routing/simple tasks
-MODEL_FAST = "gemini-2.0-flash"          # Routing, simple queries (fast & cheap)
-MODEL_SMART = "gemini-2.5-flash"         # Complex reasoning, advice
+MODEL_FAST = "gemini-2.5-flash"          # Routing, simple queries (fast & cheap)
+MODEL_SMART = "gemini-2.5-pro"           # Complex reasoning, advice
 
 # Langfuse
 LANGFUSE_PUBLIC_KEY = os.getenv("LANGFUSE_PUBLIC_KEY", "")
