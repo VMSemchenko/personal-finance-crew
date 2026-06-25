@@ -47,13 +47,13 @@ with st.sidebar:
     st.divider()
     st.markdown("""
     **Multi-Agent Crew** (LangGraph)
-    - 🔍 Data Analyst (Haiku)
-    - 💡 Savings Advisor (Sonnet)
-    - 🚨 Escalation (Haiku)
-    - 🎯 Supervisor Router (Haiku)
+    - 🔍 Data Analyst (Gemini Flash)
+    - 💡 Savings Advisor (Gemini Pro)
+    - 🚨 Escalation (Gemini Flash)
+    - 🎯 Supervisor Router (Gemini Flash)
 
-    **Single Agent Baseline** (Anthropic SDK)
-    - One Sonnet agent with all tools
+    **Single Agent Baseline** (Google GenAI SDK)
+    - One Gemini Pro agent with all tools
     """)
 
     st.divider()
@@ -79,7 +79,7 @@ with tab_chat:
             st.markdown(message["content"])
 
     # Chat input
-    if prompt := st.chat_input("Запитай про свої фінанси..."):
+    if prompt := st.chat_input("Ask about your finances..."):
         # Display user message
         st.session_state.messages.append({"role": "user", "content": prompt})
         with st.chat_message("user"):
@@ -87,7 +87,7 @@ with tab_chat:
 
         # Get response
         with st.chat_message("assistant"):
-            with st.spinner("Думаю..."):
+            with st.spinner("Thinking..."):
                 try:
                     history = st.session_state.messages[:-1]  # exclude current
 
@@ -96,7 +96,7 @@ with tab_chat:
                     else:
                         result = run_baseline(prompt, history if history else None)
 
-                    response = result.get("response", "Вибач, щось пішло не так.")
+                    response = result.get("response", "Sorry, something went wrong.")
                     st.markdown(response)
 
                     # Show trace in expander
